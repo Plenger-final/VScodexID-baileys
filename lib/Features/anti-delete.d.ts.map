@@ -1,0 +1,1 @@
+{"version":3,"file":"anti-delete.d.ts","sourceRoot":"","sources":["../../src/Features/anti-delete.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,iBAAiB;IAC9B,OAAO,CAAC,EAAE,OAAO,CAAA;IACjB,SAAS,CAAC,EAAE,MAAM,CAAA;IAClB,QAAQ,CAAC,EAAE,MAAM,CAAA;CACpB;AAED,eAAO,MAAM,eAAe,GAAI,MAAM,GAAG,EAAE,OAAM,iBAAsB,SAyCtE,CAAA"}

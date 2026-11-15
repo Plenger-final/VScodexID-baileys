@@ -1,0 +1,22 @@
+import makeWASocket from './Socket/vscodex-pro.js';
+export * from '../WAProto/index.js';
+export * from './Utils/index.js';
+export * from './Types/index.js';
+export * from './Defaults/index.js';
+export * from './WABinary/index.js';
+export * from './WAM/index.js';
+export * from './WAUSync/index.js';
+export * from './Features/anti-ban.js';
+export * from './Features/buttons.js';
+export * from './Features/media-helpers.js';
+export * from './Features/carousel.js';
+export * from './Features/album.js';
+export * from './Features/sticker-exif.js';
+export * from './Features/anti-delete.js';
+export * from './Features/auto-join.js';
+export * from './Features/lid-to-jid.js';
+export * from './Features/custom-pairing.js';
+export type WASocket = ReturnType<typeof makeWASocket>;
+export { makeWASocket };
+export default makeWASocket;
+//# sourceMappingURL=index.d.ts.map
