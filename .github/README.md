@@ -141,7 +141,7 @@ console.log("Nomor Asli:", realJid)
 
 ---
 
-## 📖 Dokumentasi Dasar Baileys (Bahasa Indonesia)
+, (Bahasa Indonesia)
 
 - **Tanpa Browser (WebSocket Murni)**: Baileys tidak memakai Selenium atau Puppeteer, melainkan terhubung langsung ke server WebSocket WhatsApp sehingga sangat hemat RAM & CPU.
 - **Mendengarkan Pesan Masuk (`messages.upsert`)**: Gunakan `sock.ev.on("messages.upsert", ({ messages }) => { ... })` untuk menangkap setiap pesan baru.
@@ -199,6 +199,116 @@ If you'd like to financially support this project, you can do so by supporting t
 
 # License
 Copyright (c) 2026 Rajeh Taher/VScodexID
+
+Licensed under the MIT License:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Thus, the maintainers of the project can't be held liable for any potential misuse of this project.
+
+
+</details>
+## 📖 Dokumentasi Dasar Baileys (Terjemahan Bahasa Indonesia)
+
+### 1. Koneksi & Autentikasi (QR Code / Pairing Code)
+- **Tanpa Browser (WebSocket Murni)**: Baileys terhubung langsung ke server WebSocket WhatsApp tanpa Puppeteer/Chrome, sehingga sangat ringan di Termux maupun VPS.
+- **Penyimpanan Sesi**: Gunakan `useMultiFileAuthState("folder_sesi")` untuk menyimpan kredensial login. Untuk skala produksi/multi-bot, disarankan menyimpan `creds` dan `keys` ke database (Redis/MongoDB/SQL).
+- **Menangkap Event (`sock.ev`)**:
+  - `connection.update`: Memantau status koneksi (`connecting`, `open`, `close`) dan mendapatkan QR Code.
+  - `creds.update`: Wajib disambungkan ke `saveCreds` agar sesi tidak hilang saat restart.
+  - `messages.upsert`: Menangkap setiap pesan masuk maupun pesan terkirim.
+
+### 2. Mengirim Pesan Standar & Media
+- **Teks & Mention**: `await sock.sendMessage(jid, { text: "Halo @628xxx", mentions: ["628xxx@s.whatsapp.net"] })`
+- **Reply / Quote Pesan**: `await sock.sendMessage(jid, { text: "Balasan" }, { quoted: msg })`
+- **Gambar / Video / Audio / Voice Note**:
+  - Gambar: `{ image: { url: "./foto.jpg" }, caption: "Judul" }`
+  - Video / GIF: `{ video: { url: "./video.mp4" }, gifPlayback: true }`
+  - Voice Note (PTT): `{ audio: { url: "./suara.mp3" }, mimetype: "audio/mp4", ptt: true }`
+- **Lokasi & Reaksi Emoji**:
+  - Lokasi: `{ location: { degreesLatitude: -7.25, degreesLongitude: 112.75 } }`
+  - Reaksi Emoji: `{ react: { text: "🔥", key: msg.key } }`
+- **Edit & Hapus Pesan**:
+  - Edit: `{ text: "Teks baru", edit: msg.key }`
+  - Hapus untuk semua: `{ delete: msg.key }`
+
+### 3. Manajemen Grup & Newsletter (Saluran)
+- **Buat Grup**: `await sock.groupCreate("Nama Grup", ["628111@s.whatsapp.net"])`
+- **Kelola Anggota**: `await sock.groupParticipantsUpdate(groupJid, ["628111@s.whatsapp.net"], "add" | "remove" | "promote" | "demote")`
+- **Ubah Info Grup**: `await sock.groupUpdateSubject(groupJid, "Judul Baru")` & `await sock.groupUpdateDescription(groupJid, "Deskripsi Baru")`
+- **Link Undangan**: `const code = await sock.groupInviteCode(groupJid)`
+- **Saluran / Newsletter**: Mendukung `newsletterFollow`, `newsletterUnfollow`, `newsletterMetadata`, dan kirim pesan ke JID `@newsletter`.
+
+### 4. Privasi, Profil & Status Story
+- **Update Profil**: `await sock.updateProfileName("Nama Bot")` & `await sock.updateProfileStatus("Bio Bot")`
+- **Blokir / Buka Blokir**: `await sock.updateBlockStatus(jid, "block" | "unblock")`
+- **Kirim Story / Status WA**: Kirim pesan ke JID `status@broadcast` dengan opsi `statusJidList: [daftarJidKontak]`.
+
+---
+
+<details>
+<summary><b>▶️ Klik untuk membuka Dokumentasi Asli Upstream (English Version)</b></summary>
+
+<br>
+
+<h1><img alt="Baileys logo" src="https://raw.githubusercontent.com/WhiskeySockets/Baileys/refs/heads/master/Media/logo.png" height="75"/></h1>
+
+
+> [!CAUTION]
+> NOTICE OF BREAKING CHANGE.
+>
+> As of 7.0.0, multiple breaking changes were introduced into the library.
+>
+> Please check out https://whiskey.so/migrate-latest for more information.
+
+Baileys is a WebSockets-based TypeScript library for interacting with the WhatsApp Web API.
+
+Join the WhiskeySockets community via the link: https://whiskey.so/discord
+
+# Usage & Guide
+
+> [!IMPORTANT]
+> The new guide is a work in progress. Expect missing pages/content. [Report missing or incorrect content.](https://github.com/WhiskeySockets/baileys.wiki-site/issues/new)
+>
+> **You can still access the old guide here:** [README.md](https://github.com/WhiskeySockets/Baileys/tree/master/README.md), or the [NPM homepage](https://npmjs.com/package/baileys).
+
+The new guide is posted at https://baileys.wiki .
+
+# Get Support
+
+If you'd like business to enterprise-level support from Rajeh, the current maintainer of Baileys, you can book a video chat. Book a 1 hour time slot by contacting him on Discord or pre-ordering [here](https://purpshell.dev/book). The earlier you pre-order the better, as his time slots usually fill up very quickly. He offers immense value per hour and will answer all your questions before the time runs out.
+
+If you are a business, we encourage you to contribute back to the high development costs of the project and to feed the maintainers who dump tens of hours a week on this. You can do so by booking meetings or sponsoring below. All support, even in bona fide / contribution hours, is welcome by businesses of all sizes. This is not condoning or endorsing businesses to use the library. See the Disclaimer below.
+
+# Sponsor
+
+If you'd like to financially support this project, you can do so by supporting the current maintainer [here](https://purpshell.dev/sponsor).
+
+# Disclaimer
+> [!CAUTION]
+> This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with WhatsApp or any of its subsidiaries or its affiliates.
+> The official WhatsApp website can be found at whatsapp.com. "WhatsApp" as well as related names, marks, emblems and images are registered trademarks of their respective owners.
+>
+> The maintainers of Baileys do not in any way condone the use of this application in practices that violate the Terms of Service of WhatsApp. The maintainers of this application call upon the personal responsibility of its users to use this application in a fair way, as it is intended to be used.
+> Use at your own discretion. Do not spam people with this. We discourage any stalkerware, bulk or automated messaging usage.
+
+# License
+Copyright (c) 2026 Rajeh Taher/WhiskeySockets
 
 Licensed under the MIT License:
 Permission is hereby granted, free of charge, to any person obtaining a copy
